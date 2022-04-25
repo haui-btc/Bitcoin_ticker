@@ -14,8 +14,8 @@ blocks = requests.get("https://mempool.space/api/blocks")
 #Mempool
 mempool = requests.get("https://mempool.space/api/mempool")
 fees = requests.get("https://mempool.space/api/v1/fees/recommended")
-#Bitcoin price
-price = requests.get("https://api.blockchain.com/v3/exchange/tickers/BTC-USD")
+#Price / Marketcap
+cap = requests.get("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true")
 #-----------------------------------------------------------------------------
 #Create lists
 #blocks-api returns infos of the last 10 blocks
@@ -82,7 +82,10 @@ while status == True:
   #-----------------------------------------------------------------------------
   #Price/Marketcap
   print(Style.NORMAL + Fore.YELLOW + "==|Price / Marketcap|================================================================")
-  print("Price:",round(price.json()["last_trade_price"],2),"USD")
+  print("Price:", round(cap.json()['bitcoin']['usd'], 2),"USD")
+  print("Marketcap:", round(cap.json()['bitcoin']['usd_market_cap'], 2),"USD")
+  print("24h volume:", round(cap.json()['bitcoin']['usd_24h_vol'], 2),"USD")
+  print("24h change:", round(cap.json()['bitcoin']['usd_24h_change'], 2),"USD")
   print()
 
   #Blockchain Info
