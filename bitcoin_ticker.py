@@ -8,7 +8,7 @@ init(autoreset=True)
 #API Endpoints
 #-----------------------------------------------------------------------------
 #Mining
-response = requests.get("https://mempool.space/api/v1/difficulty-adjustment")
+mining = requests.get("https://mempool.space/api/v1/difficulty-adjustment")
 #Blockchain
 blocks = requests.get("https://mempool.space/api/blocks")
 #Mempool
@@ -28,22 +28,33 @@ size_list = []
 #-----------------------------------------------------------------------------
 #Connection check
 status = True
-counter = 0
+#counter = 0
 
 while status == True:
   #Repeats following code if response code == 200
-  if (response.status_code == 200):
+  if (mining.status_code == 200):
     status = True
     #counter += 1   #for testing
   # Exit script if response code == 404
-  elif (response.status_code == 404):
+  elif (mining.status_code == 404):
     status = False
     print("Lost connection! Exit script")
     os.system('ctrl+c')
+  #Print logo
+  print(Style.NORMAL + Fore.YELLOW + '''\
+  
+██████╗ ██╗████████╗ ██████╗ ██████╗ ██╗███╗   ██╗
+██╔══██╗██║╚══██╔══╝██╔════╝██╔═══██╗██║████╗  ██║
+██████╔╝██║   ██║   ██║     ██║   ██║██║██╔██╗ ██║
+██╔══██╗██║   ██║   ██║     ██║   ██║██║██║╚██╗██║
+██████╔╝██║   ██║   ╚██████╗╚██████╔╝██║██║ ╚████║
+╚═════╝ ╚═╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝''')
+  print(Style.DIM + Fore.LIGHTGREEN_EX + "🐇 ₿itcoin ticker by https://github.com/haui-btc")
+  print()
   # API Endpoints
   #-----------------------------------------------------------------------------
   #Mining
-  response = requests.get("https://mempool.space/api/v1/difficulty-adjustment")
+  mining = requests.get("https://mempool.space/api/v1/difficulty-adjustment")
   #Blockchain
   blocks = requests.get("https://mempool.space/api/blocks")
   #Mempool
@@ -69,12 +80,12 @@ while status == True:
   #-----------------------------------------------------------------------------
   #Screen Output
   #-----------------------------------------------------------------------------
-  print(Style.NORMAL + Fore.YELLOW + "==|₿itcoin|===========================================================")
+  print(Style.NORMAL + Fore.YELLOW + "==|Price / Marketcap|================================================================")
   print("Price:",round(price.json()["last_trade_price"],2),"USD")
   print()
 
   #Blockchain Info
-  print(Style.NORMAL + Fore.YELLOW + "==|₿lockchain-Info|===================================================")
+  print(Style.NORMAL + Fore.YELLOW + "==|Blockchain-Info|==================================================================")
   print("Latest block: ",height_list[0])
   print("Timestamp: ",readable_time[0])
   print("Latest block hash:",id_list[0])
@@ -84,18 +95,22 @@ while status == True:
   print()
 
   #Mempool Info
-  print(Style.NORMAL + Fore.YELLOW + "==|Mempool-Info|======================================================")
+  print(Style.NORMAL + Fore.YELLOW + "==|Mempool-Info|=====================================================================")
   print("Unconfirmed TX:",mempool.json()['count'])
-  print("Minimum fee:",fees.json()['minimumFee'],"sat")
-  print("Fastest fee:",fees.json()['fastestFee'],"sat")
+  print("Minimum fee:", fees.json()['minimumFee'], "sat")
+  print()
+  print(Style.NORMAL + Fore.YELLOW + "==|Transaction fees|=================================================================")
+  print("Low priority:",fees.json()['hourFee'],"sat")
+  print("Medium priority:", fees.json()['halfHourFee'], "sat")
+  print("High priority:",fees.json()['fastestFee'],"sat")
   print()
 
   #Mining info
-  print(Style.NORMAL + Fore.YELLOW + "==|Mining-Info|=======================================================")
-  print("Difficulty progress:",round(response.json()['progressPercent'],2),"%")
-  print("Remaining blocks:",response.json()['remainingBlocks'])
-  print("Estimated difficulty change:",round(response.json()['difficultyChange'],2),"%")
-  print("Previous difficulty change:",round(response.json()['previousRetarget'],2),"%")
+  print(Style.NORMAL + Fore.YELLOW + "==|Mining-Info|======================================================================")
+  print("Difficulty progress:",round(mining.json()['progressPercent'],2),"%")
+  print("Remaining blocks:",mining.json()['remainingBlocks'])
+  print("Estimated difficulty change:",round(mining.json()['difficultyChange'],2),"%")
+  print("Previous difficulty change:",round(mining.json()['previousRetarget'],2),"%")
   print()
   #-----------------------------------------------------------------------------
 
