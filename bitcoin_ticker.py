@@ -26,14 +26,14 @@ readable_time = []
 tx_count_list = []
 size_list = []
 #-----------------------------------------------------------------------------
-#Connection check
+#API Connection check
 status = True
 
 while status == True:
-  #Repeats following code if response code == 200
+  #Repeats following code if response code==200 (from blocks-api)
   if (blocks.status_code == 200):
     status = True
-  # Exit script if response code == 404
+  # Exit script if response code==404
   elif (blocks.status_code == 404):
     status = False
     print("Lost connection! Exit script")
@@ -78,6 +78,7 @@ while status == True:
   #-----------------------------------------------------------------------------
   #Screen Output
   #-----------------------------------------------------------------------------
+  #Price/Marketcap
   print(Style.NORMAL + Fore.YELLOW + "==|Price / Marketcap|================================================================")
   print("Price:",round(price.json()["last_trade_price"],2),"USD")
   print()
@@ -118,7 +119,7 @@ while status == True:
     print(Style.DIM + Fore.LIGHTCYAN_EX + "Refresh in",Style.DIM + Fore.YELLOW + f"{i}",Style.DIM + Fore.LIGHTCYAN_EX + "seconds", end="\r", flush=True)
     time.sleep(1)
 
-  #Clear screen - check OS to decide if clear or cls
+  #Clear screen - check OS to decide if clear or cls is needed
   if (os.name == 'posix'):
     os.system('clear')
   else:
