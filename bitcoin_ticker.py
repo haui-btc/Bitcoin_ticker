@@ -18,6 +18,8 @@ fees = requests.get("https://mempool.space/api/v1/fees/recommended")
 price = requests.get("https://api.blockchain.com/v3/exchange/tickers/BTC-USD")
 #-----------------------------------------------------------------------------
 #Create lists
+#blocks-api returns infos of the last 10 blocks
+#write values to a list to print only the latest value
 height_list = []
 id_list = []
 previous_id_list = []
@@ -84,7 +86,7 @@ while status == True:
   print()
 
   #Blockchain Info
-  #print index 0 (latest value) from lists
+  #print index 0 (to get the latest value) from lists
   print(Style.NORMAL + Fore.YELLOW + "==|Blockchain-Info|==================================================================")
   print("Latest block: ",height_list[0])
   print("Timestamp: ",readable_time[0])
