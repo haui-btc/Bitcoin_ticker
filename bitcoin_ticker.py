@@ -61,7 +61,7 @@ while status == True:
   #Mempool
   mempool = requests.get("https://mempool.space/api/mempool")
   fees = requests.get("https://mempool.space/api/v1/fees/recommended")
-  # itcoin price
+  #Bitcoin price
   price = requests.get("https://api.blockchain.com/v3/exchange/tickers/BTC-USD")
   #-----------------------------------------------------------------------------
   #Write blockchain API values to lists
