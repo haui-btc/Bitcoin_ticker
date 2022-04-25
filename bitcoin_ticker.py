@@ -115,7 +115,7 @@ while status == True:
   #-----------------------------------------------------------------------------
 
   #Refresh countdown
-  for i in range(15, 0, -1):
+  for i in range(30, 0, -1):
     print(Style.DIM + Fore.LIGHTCYAN_EX + "Refresh in",Style.DIM + Fore.YELLOW + f"{i}",Style.DIM + Fore.LIGHTCYAN_EX + "seconds", end="\r", flush=True)
     time.sleep(1)
 
