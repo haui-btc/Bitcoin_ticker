@@ -28,15 +28,13 @@ size_list = []
 #-----------------------------------------------------------------------------
 #Connection check
 status = True
-#counter = 0
 
 while status == True:
   #Repeats following code if response code == 200
-  if (mining.status_code == 200):
+  if (blocks.status_code == 200):
     status = True
-    #counter += 1   #for testing
   # Exit script if response code == 404
-  elif (mining.status_code == 404):
+  elif (blocks.status_code == 404):
     status = False
     print("Lost connection! Exit script")
     os.system('ctrl+c')
@@ -49,9 +47,10 @@ while status == True:
 ██╔══██╗██║   ██║   ██║     ██║   ██║██║██║╚██╗██║
 ██████╔╝██║   ██║   ╚██████╗╚██████╔╝██║██║ ╚████║
 ╚═════╝ ╚═╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝''')
-  print(Style.DIM + Fore.LIGHTGREEN_EX + "🐇 ₿itcoin ticker by https://github.com/haui-btc")
+  print(Style.DIM + Fore.LIGHTGREEN_EX + "₿itcoin ticker by https://github.com/haui-btc")
   print()
-  # API Endpoints
+
+  #API Endpoints
   #-----------------------------------------------------------------------------
   #Mining
   mining = requests.get("https://mempool.space/api/v1/difficulty-adjustment")
@@ -63,8 +62,7 @@ while status == True:
   # itcoin price
   price = requests.get("https://api.blockchain.com/v3/exchange/tickers/BTC-USD")
   #-----------------------------------------------------------------------------
-
-  #Write API values to lists
+  #Write blockchain API values to lists
   for data in blocks.json():
     height_list.append(data['height'])
     id_list.append(data['id'])
@@ -85,6 +83,7 @@ while status == True:
   print()
 
   #Blockchain Info
+  #print index 0 (latest value) from lists
   print(Style.NORMAL + Fore.YELLOW + "==|Blockchain-Info|==================================================================")
   print("Latest block: ",height_list[0])
   print("Timestamp: ",readable_time[0])
