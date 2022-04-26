@@ -128,9 +128,9 @@ while status == True:
     # -----------------------------------------------------------------------------
     # Refresh countdown
     # -----------------------------------------------------------------------------
-    print(Style.DIM + Fore.LIGHTBLACK_EX + "Reloading data in 15 seconds...")
-    # Loading bar
-    pbar = tqdm(total=100)
+    print(Style.DIM + Fore.LIGHTBLACK_EX + "Reloading data...")
+    # Progress bar
+    pbar = tqdm(total=100)  #PARAMS: , colour="white"
     for i in range(15):
         sleep(1)
         pbar.update(7)
