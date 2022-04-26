@@ -9,4 +9,4 @@ A small python script which provides Bitcoin-data:
 
 ## Screenshots
 
-![App Screenshot](https://github.com/haui-btc/Bitcoin_ticker/blob/main/screenshot.png?raw=true)
+![App Screenshot](https://github.com/haui-btc/Bitcoin_ticker/blob/main/bitcoin_ticker.png?raw=true)
