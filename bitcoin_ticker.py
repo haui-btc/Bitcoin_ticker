@@ -83,7 +83,7 @@ while status == True:
     # -----------------------------------------------------------------------------
     # Screen Output
     # -----------------------------------------------------------------------------
-    # Price/Marketcap
+    # Price/Marketcap               
     print(
         Style.NORMAL + Fore.YELLOW + "==|Price / Marketcap|================================================================")
     print("Price:", round(cap.json()['bitcoin']['usd'], 2), "USD")
@@ -105,9 +105,12 @@ while status == True:
     print()
 
     # Mempool Info
+    """
+    #IDEA: store 'count' in a list. calculate the difference between last update and count-now
+    """
     print(
         Style.NORMAL + Fore.YELLOW + "==|Mempool-Info|=====================================================================")
-    print("Unconfirmed TX:", mempool.json()['count'])
+    print("Unconfirmed TX:", mempool.json()['count']," DIFF: + ")
     print("Minimum fee:", fees.json()['minimumFee'], "sat")
     print()
     print(
