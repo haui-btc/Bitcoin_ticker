@@ -8,5 +8,4 @@ A small python script which provides Bitcoin-data:
 - Mining-Info
 
 ## Screenshots
-- Main
 ![App Screenshot](https://github.com/haui-btc/bitcoin_ticker/blob/main/screenshots/main.png?raw=true)
