@@ -8,5 +8,7 @@ A small python script which provides Bitcoin-data:
 - Mining-Info
 
 ## Screenshots
-
-![App Screenshot](https://github.com/haui-btc/Bitcoin_ticker/blob/main/ticker_screen.png?raw=true)
+- Main
+![App Screenshot](https://github.com/haui-btc/Bitcoin_ticker/blob/main/screen.png?raw=true)
+-  Message "New block!" appears if a new block was mined during the reloading process 
+![App Screenshot](https://github.com/haui-btc/Bitcoin_ticker/blob/main/screen_new_block.png?raw=true)
