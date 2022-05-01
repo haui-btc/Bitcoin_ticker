@@ -4,6 +4,7 @@ import os
 from colorama import init, Fore, Back, Style
 from tqdm import tqdm
 from time import sleep
+from playsound import playsound
 # For colored strings
 init(autoreset=True)
 # -----------------------------------------------------------------------------
@@ -111,11 +112,15 @@ while status == True:
             diff = int(mempool_tx) - int(second_last)
         else:
             diff = 0
-            second_last = Style.NORMAL + Fore.YELLOW + str("New block!")
+            #second_last = Style.NORMAL + Fore.YELLOW + str("New block!")
     print(
         Style.NORMAL + Fore.YELLOW + "==|Mempool-Info|=====================================================================")
     print("Unconfirmed TX:", mempool.json()['count'])
-    print("New TX since last reload:", Style.NORMAL + Fore.YELLOW + str(diff) , "// before: " + Style.NORMAL + Fore.YELLOW + str(second_last)   )
+    if second_last < mempool_tx:
+        print("New TX since last reload:", Style.NORMAL + Fore.YELLOW + "+" + str(diff))
+    else:
+        playsound('/home/haui/git/Bitcoin_ticker/sound.mp3')
+        print("New TX since last reload:", Style.NORMAL + Fore.YELLOW + "New Block!")
     print("Minimum fee:", fees.json()['minimumFee'], "sat")
     print()
 
