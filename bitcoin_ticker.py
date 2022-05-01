@@ -4,25 +4,10 @@ import os
 from colorama import init, Fore, Back, Style
 from tqdm import tqdm
 from time import sleep
-
+# For colored strings
 init(autoreset=True)
-
-# API Endpoints
 # -----------------------------------------------------------------------------
-# Mining
-mining = requests.get("https://mempool.space/api/v1/difficulty-adjustment")
-# Blockchain
-blocks = requests.get("https://mempool.space/api/blocks")
-# Mempool
-mempool = requests.get("https://mempool.space/api/mempool")
-fees = requests.get("https://mempool.space/api/v1/fees/recommended")
-# Price / Marketcap
-cap = requests.get(
-    "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true")
-# -----------------------------------------------------------------------------
-# Create lists
-# blocks-api returns infos of the last 10 blocks
-# write values to a list to print only the latest value
+# Create lists to store values from 'blocks' api
 height_list = []
 id_list = []
 previous_id_list = []
@@ -30,12 +15,13 @@ timestamp_list = []
 readable_time = []
 tx_count_list = []
 size_list = []
-#for Mempool TX difference
+# Used to calculate mempool tx difference since last reload
 mempool_history = []
 # -----------------------------------------------------------------------------
-# API Connection check
+# API Connection check / Script loop
+# Define API Endpoint for connection check
+blocks = requests.get("https://mempool.space/api/blocks")
 status = True
-
 while status == True:
     # Repeats following code if response code==200 (from blocks-api)
     if (blocks.status_code == 200):
@@ -45,32 +31,34 @@ while status == True:
         status = False
         print("Lost connection! Exit script")
         os.system('ctrl+c')
+    # -----------------------------------------------------------------------------
     # Print logo
     print(Style.NORMAL + Fore.YELLOW + '''\
-
-██████╗ ██╗████████╗ ██████╗ ██████╗ ██╗███╗   ██╗
-██╔══██╗██║╚══██╔══╝██╔════╝██╔═══██╗██║████╗  ██║
-██████╔╝██║   ██║   ██║     ██║   ██║██║██╔██╗ ██║
-██╔══██╗██║   ██║   ██║     ██║   ██║██║██║╚██╗██║
-██████╔╝██║   ██║   ╚██████╗╚██████╔╝██║██║ ╚████║
-╚═════╝ ╚═╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝''')
+    
+    ██████╗ ██╗████████╗ ██████╗ ██████╗ ██╗███╗   ██╗
+    ██╔══██╗██║╚══██╔══╝██╔════╝██╔═══██╗██║████╗  ██║
+    ██████╔╝██║   ██║   ██║     ██║   ██║██║██╔██╗ ██║
+    ██╔══██╗██║   ██║   ██║     ██║   ██║██║██║╚██╗██║
+    ██████╔╝██║   ██║   ╚██████╗╚██████╔╝██║██║ ╚████║
+    ╚═════╝ ╚═╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝''')
     print(Style.DIM + Fore.LIGHTBLACK_EX + "₿itcoin ticker by https://github.com/haui-btc")
     print()
-
+    # -----------------------------------------------------------------------------
     # API Endpoints
     # -----------------------------------------------------------------------------
     # Mining
     mining = requests.get("https://mempool.space/api/v1/difficulty-adjustment")
-    # Blockchain
-    blocks = requests.get("https://mempool.space/api/blocks")
     # Mempool
     mempool = requests.get("https://mempool.space/api/mempool")
     fees = requests.get("https://mempool.space/api/v1/fees/recommended")
-    # Bitcoin price
-    price = requests.get("https://api.blockchain.com/v3/exchange/tickers/BTC-USD")
+    # Bitcoin price / Marketcap
+    cap = requests.get(
+        "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true")
     # -----------------------------------------------------------------------------
      
-    # Write blockchain API values to lists
+    # Write blockchain API (blocks) values to list
+    # blocks api returns info of the last 10 blocks
+    # write values to a list to print only the latest value
     for data in blocks.json():
         height_list.append(data['height'])
         id_list.append(data['id'])
@@ -79,14 +67,14 @@ while status == True:
         tx_count_list.append(data['tx_count'])
         size_list.append(data['size'])
     # -----------------------------------------------------------------------------
-    # Convert timestamp to readable time
+    # Convert timestamp to human-readable time
     for times in timestamp_list:
         a = time.ctime(times)
         readable_time.append(a)
     # -----------------------------------------------------------------------------
     # Screen Output
     # -----------------------------------------------------------------------------
-    # Price/Marketcap               
+    # Price/Marketcap
     print(
         Style.NORMAL + Fore.YELLOW + "==|Price / Marketcap|================================================================")
     print("Price:", round(cap.json()['bitcoin']['usd'], 2), "USD")
@@ -96,7 +84,7 @@ while status == True:
     print()
 
     # Blockchain Info
-    # print index 0 (to get the latest value) from lists
+    # print index 0 from lists to get the latest value
     print(
         Style.NORMAL + Fore.YELLOW + "==|Blockchain-Info|==================================================================")
     print("Latest block: ", height_list[0])
@@ -108,8 +96,7 @@ while status == True:
     print()
 
     # Mempool Info
-    #--------------------------------------------------------------------
-    # Mempool TX difference
+    # Variables for tx-difference
     mempool_tx = mempool.json()['count']
     add = mempool_history.append(mempool_tx)
     second_last = 0
@@ -118,13 +105,14 @@ while status == True:
     for i, tx in enumerate(mempool_history[:-1]):
         second_last = tx
         diff = int(mempool_tx) - int(second_last)
-    #---------------------------------------------------------------------
     print(
         Style.NORMAL + Fore.YELLOW + "==|Mempool-Info|=====================================================================")
     print("Unconfirmed TX:", mempool.json()['count'])
     print("New TX since last reload:", Style.NORMAL + Fore.YELLOW + "+" + str(diff), "(before: " + str(second_last) + ")")
     print("Minimum fee:", fees.json()['minimumFee'], "sat")
     print()
+
+    # Transacation fees
     print(
         Style.NORMAL + Fore.YELLOW + "==|Transaction fees|=================================================================")
     print("Low priority:", fees.json()['hourFee'], "sat")
@@ -142,7 +130,6 @@ while status == True:
     print()
     # -----------------------------------------------------------------------------
     # Refresh countdown
-    # -----------------------------------------------------------------------------
     print(Style.DIM + Fore.LIGHTBLACK_EX + "Reloading data...")
     # Progress bar
     pbar = tqdm(total=100)  #PARAMS: , colour="white"
