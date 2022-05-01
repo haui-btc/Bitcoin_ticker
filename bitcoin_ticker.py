@@ -119,7 +119,7 @@ while status == True:
     if second_last < mempool_tx:
         print("New TX since last reload:", Style.NORMAL + Fore.YELLOW + "+" + str(diff))
     else:
-        playsound('/home/haui/git/Bitcoin_ticker/sound.mp3')
+        playsound('/home/haui/git/Bitcoin_ticker/sound/sound.mp3')
         print("New TX since last reload:", Style.NORMAL + Fore.YELLOW + "New Block!")
     print("Minimum fee:", fees.json()['minimumFee'], "sat")
     print()
