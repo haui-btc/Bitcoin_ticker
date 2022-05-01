@@ -30,6 +30,8 @@ timestamp_list = []
 readable_time = []
 tx_count_list = []
 size_list = []
+#for Mempool TX difference
+mempool_history = []
 # -----------------------------------------------------------------------------
 # API Connection check
 status = True
@@ -67,6 +69,7 @@ while status == True:
     # Bitcoin price
     price = requests.get("https://api.blockchain.com/v3/exchange/tickers/BTC-USD")
     # -----------------------------------------------------------------------------
+     
     # Write blockchain API values to lists
     for data in blocks.json():
         height_list.append(data['height'])
@@ -105,12 +108,21 @@ while status == True:
     print()
 
     # Mempool Info
-    """
-    #IDEA: store 'count' in a list. calculate the difference between last update and count-now
-    """
+    #--------------------------------------------------------------------
+    # Mempool TX difference
+    mempool_tx = mempool.json()['count']
+    add = mempool_history.append(mempool_tx)
+    second_last = 0
+    diff = 0
+    # Calculate new TX since last update
+    for i, tx in enumerate(mempool_history[:-1]):
+        second_last = tx
+        diff = int(mempool_tx) - int(second_last)
+    #---------------------------------------------------------------------
     print(
         Style.NORMAL + Fore.YELLOW + "==|Mempool-Info|=====================================================================")
-    print("Unconfirmed TX:", mempool.json()['count']," DIFF: + ")
+    print("Unconfirmed TX:", mempool.json()['count'])
+    print("New TX since last reload:", Style.NORMAL + Fore.YELLOW + "+" + str(diff), "(before: " + str(second_last) + ")")
     print("Minimum fee:", fees.json()['minimumFee'], "sat")
     print()
     print(
