@@ -56,7 +56,14 @@ while status == True:
         "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true")
     blocks = requests.get("https://mempool.space/api/blocks")
     # -----------------------------------------------------------------------------
-
+    # Create lists to store values from 'blocks' api
+    height_list = []
+    id_list = []
+    previous_id_list = []
+    timestamp_list = []
+    readable_time = []
+    tx_count_list = []
+    size_list = []
     # Write blockchain API (blocks) values to list
     # blocks api returns info of the last 10 blocks
     # write values to a list to print only the latest value
