@@ -7,14 +7,7 @@ from time import sleep
 # For colored strings
 init(autoreset=True)
 # -----------------------------------------------------------------------------
-# Create lists to store values from 'blocks' api
-height_list = []
-id_list = []
-previous_id_list = []
-timestamp_list = []
-readable_time = []
-tx_count_list = []
-size_list = []
+
 # Used to calculate mempool tx difference since last reload
 mempool_history = []
 # -----------------------------------------------------------------------------
@@ -64,6 +57,7 @@ while status == True:
     readable_time = []
     tx_count_list = []
     size_list = []
+    # -----------------------------------------------------------------------------
     # Write blockchain API (blocks) values to list
     # blocks api returns info of the last 10 blocks
     # write values to a list to print only the latest value
@@ -122,7 +116,7 @@ while status == True:
     print(
         Style.NORMAL + Fore.YELLOW + "==|Mempool-Info|=====================================================================")
     print("Unconfirmed TX:", mempool.json()['count'])
-    print("New TX since last reload:", Style.NORMAL + Fore.YELLOW + str(diff) , "(before: " + str(second_last) + ")")
+    print("New TX since last reload:", Style.NORMAL + Fore.YELLOW + str(diff) , "// before: " + Style.NORMAL + Fore.YELLOW + str(second_last)   )
     print("Minimum fee:", fees.json()['minimumFee'], "sat")
     print()
 
