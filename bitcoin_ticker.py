@@ -4,17 +4,11 @@ import os
 from colorama import init, Fore, Back, Style
 from tqdm import tqdm
 from time import sleep
+from playsound import playsound
+
 # For colored strings
 init(autoreset=True)
 # -----------------------------------------------------------------------------
-# Create lists to store values from 'blocks' api
-height_list = []
-id_list = []
-previous_id_list = []
-timestamp_list = []
-readable_time = []
-tx_count_list = []
-size_list = []
 # Used to calculate mempool tx difference since last reload
 mempool_history = []
 # -----------------------------------------------------------------------------
@@ -34,13 +28,13 @@ while status == True:
     # -----------------------------------------------------------------------------
     # Print logo
     print(Style.NORMAL + Fore.YELLOW + '''\
-    
-    ██████╗ ██╗████████╗ ██████╗ ██████╗ ██╗███╗   ██╗
-    ██╔══██╗██║╚══██╔══╝██╔════╝██╔═══██╗██║████╗  ██║
-    ██████╔╝██║   ██║   ██║     ██║   ██║██║██╔██╗ ██║
-    ██╔══██╗██║   ██║   ██║     ██║   ██║██║██║╚██╗██║
-    ██████╔╝██║   ██║   ╚██████╗╚██████╔╝██║██║ ╚████║
-    ╚═════╝ ╚═╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝''')
+
+██████╗ ██╗████████╗ ██████╗ ██████╗ ██╗███╗   ██╗
+██╔══██╗██║╚══██╔══╝██╔════╝██╔═══██╗██║████╗  ██║
+██████╔╝██║   ██║   ██║     ██║   ██║██║██╔██╗ ██║
+██╔══██╗██║   ██║   ██║     ██║   ██║██║██║╚██╗██║
+██████╔╝██║   ██║   ╚██████╗╚██████╔╝██║██║ ╚████║
+╚═════╝ ╚═╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝''')
     print(Style.DIM + Fore.LIGHTBLACK_EX + "₿itcoin ticker by https://github.com/haui-btc")
     print()
     # -----------------------------------------------------------------------------
@@ -56,7 +50,15 @@ while status == True:
         "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true")
     blocks = requests.get("https://mempool.space/api/blocks")
     # -----------------------------------------------------------------------------
-
+    # Create lists to store values from 'blocks' api
+    height_list = []
+    id_list = []
+    previous_id_list = []
+    timestamp_list = []
+    readable_time = []
+    tx_count_list = []
+    size_list = []
+    # -----------------------------------------------------------------------------
     # Write blockchain API (blocks) values to list
     # blocks api returns info of the last 10 blocks
     # write values to a list to print only the latest value
@@ -84,7 +86,7 @@ while status == True:
     print("24h change:", round(cap.json()['bitcoin']['usd_24h_change'], 2), "USD")
     print()
 
-    # Blockchain Info
+    # Blockchain Info (blocks api)
     # print index 0 from lists to get the latest value
     print(
         Style.NORMAL + Fore.YELLOW + "==|Blockchain-Info|==================================================================")
@@ -111,11 +113,15 @@ while status == True:
             diff = int(mempool_tx) - int(second_last)
         else:
             diff = 0
-            second_last = Style.NORMAL + Fore.YELLOW + str("New block!")
+            # second_last = Style.NORMAL + Fore.YELLOW + str("New block!")
     print(
         Style.NORMAL + Fore.YELLOW + "==|Mempool-Info|=====================================================================")
     print("Unconfirmed TX:", mempool.json()['count'])
-    print("New TX since last reload:", Style.NORMAL + Fore.YELLOW + str(diff) , "(before: " + str(second_last) + ")")
+    if second_last < mempool_tx:
+        print("New TX since last reload:", Style.NORMAL + Fore.YELLOW + "+" + str(diff))
+    else:
+        playsound('/home/haui/git/Bitcoin_ticker/sound/sound.mp3')
+        print("New TX since last reload:", Style.NORMAL + Fore.YELLOW + "New Block!")
     print("Minimum fee:", fees.json()['minimumFee'], "sat")
     print()
 
@@ -139,7 +145,7 @@ while status == True:
     # Refresh countdown
     print(Style.DIM + Fore.LIGHTBLACK_EX + "Reloading data...")
     # Progress bar
-    pbar = tqdm(total=100)  #PARAMS: , colour="white"
+    pbar = tqdm(total=100)  # PARAMS: , colour="white"
     for i in range(15):
         sleep(1)
         pbar.update(7)
