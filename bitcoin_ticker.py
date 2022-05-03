@@ -112,7 +112,7 @@ while status == True:
             diff = int(mempool_tx) - int(second_last)
         else:
             diff = 0
-            #second_last = Style.NORMAL + Fore.YELLOW + str("New block!")
+
     print(
         Style.NORMAL + Fore.YELLOW + "==|Mempool-Info|=====================================================================")
     print("Unconfirmed TX:", mempool.json()['count'])
