@@ -21,7 +21,7 @@ while status == True:
         status = True
     # Exit script if response code==404
     elif (blocks.status_code == 404):
-        status = False
+        #status = False
         print("Lost connection! Exit script")
         os.system('ctrl+c')
     # -----------------------------------------------------------------------------
@@ -59,8 +59,8 @@ while status == True:
     size_list = []
     # -----------------------------------------------------------------------------
     # Write blockchain API (blocks) values to list
-    # blocks api returns info of the last 10 blocks
-    # write values to a list to print only the latest value
+    # blocks api provides info of the last 10 blocks
+    # write values to a list to print only the latest values
     for data in blocks.json():
         height_list.append(data['height'])
         id_list.append(data['id'])
