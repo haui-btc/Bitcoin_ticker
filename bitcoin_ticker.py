@@ -7,10 +7,10 @@ from time import sleep
 from playsound import playsound
 # For colored strings
 init(autoreset=True)
-# -----------------------------------------------------------------------------
+
 # Used to calculate mempool tx difference since last reload
 mempool_history = []
-# -----------------------------------------------------------------------------
+
 # API Connection check / Script loop
 # Define API Endpoint for connection check
 blocks = requests.get("https://mempool.space/api/blocks")
@@ -24,7 +24,7 @@ while status == True:
         #status = False
         print("Lost connection! Exit script")
         os.system('ctrl+c')
-    # -----------------------------------------------------------------------------
+    
     # Print logo
     print(Style.NORMAL + Fore.YELLOW + '''\
         
@@ -36,9 +36,8 @@ while status == True:
 ╚═════╝ ╚═╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝''')
     print(Style.DIM + Fore.LIGHTBLACK_EX + "₿itcoin ticker by https://github.com/haui-btc")
     print()
-    # -----------------------------------------------------------------------------
+    
     # API Endpoints
-    # -----------------------------------------------------------------------------
     # Mining
     mining = requests.get("https://mempool.space/api/v1/difficulty-adjustment")
     # Mempool
@@ -48,7 +47,7 @@ while status == True:
     cap = requests.get(
         "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true")
     blocks = requests.get("https://mempool.space/api/blocks")
-    # -----------------------------------------------------------------------------
+    
     # Create lists to store values from 'blocks' api
     height_list = []
     id_list = []
@@ -57,7 +56,7 @@ while status == True:
     readable_time = []
     tx_count_list = []
     size_list = []
-    # -----------------------------------------------------------------------------
+    
     # Write blockchain API (blocks) values to list
     # blocks api provides info of the last 10 blocks
     # write values to a list to print only the latest values
@@ -68,14 +67,13 @@ while status == True:
         timestamp_list.append(data['timestamp'])
         tx_count_list.append(data['tx_count'])
         size_list.append(data['size'])
-    # -----------------------------------------------------------------------------
+    
     # Convert timestamp to human-readable time
     for times in timestamp_list:
         a = time.ctime(times)
         readable_time.append(a)
-    # -----------------------------------------------------------------------------
+    
     # Screen Output
-    # -----------------------------------------------------------------------------
     # Price/Marketcap
     print(
         Style.NORMAL + Fore.YELLOW + "==|Price / Marketcap|================================================================")
@@ -141,7 +139,7 @@ while status == True:
     print("Estimated difficulty change:", round(mining.json()['difficultyChange'], 2), "%")
     print("Previous difficulty change:", round(mining.json()['previousRetarget'], 2), "%")
     print()
-    # -----------------------------------------------------------------------------
+    
     # Refresh countdown
     print(Style.DIM + Fore.LIGHTBLACK_EX + "Reloading data...")
     # Progress bar
@@ -150,7 +148,7 @@ while status == True:
         sleep(1)
         pbar.update(7)
     pbar.close()
-    # -----------------------------------------------------------------------------
+    
     # Clear screen - check OS to decide if clear or cls is needed
     if (os.name == 'posix'):
         os.system('clear')
