@@ -77,11 +77,10 @@ while status == True:
     # Price/Marketcap
     print(
         Style.NORMAL + Fore.YELLOW + "==|Price / Marketcap|================================================================")
-    print("Price:", cap.json()['bitcoin']['usd'], "USD")
+    print("Price: 1 Bitcoin = 1 Bitcoin")
     print("Moscow Time:", round(100000000/(cap.json()['bitcoin']['usd'])))
     print("Marketcap:", round(cap.json()['bitcoin']['usd_market_cap'], 2), "USD")
     print("24h volume:", round(cap.json()['bitcoin']['usd_24h_vol'], 2), "USD")
-    print("24h price change:", round(cap.json()['bitcoin']['usd_24h_change'], 2), "USD")
     print()
 
     # Blockchain Info (blocks api)
