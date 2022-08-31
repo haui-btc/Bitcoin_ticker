@@ -1,7 +1,7 @@
 # Bitcoin ticker
 
 A small python script which provides Bitcoin-data:
-- Price / Marketcap / Moscow time
+- Price / Marketcap
 - Blockchain-Info
 - Mempool-Info
 - Transaction fees
