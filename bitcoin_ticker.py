@@ -8,6 +8,8 @@ import platform
 import sys
 
 # function to play a sound if a new block is mined (check if os is linux or windows)
+
+
 def play_sound(sound_file):
     system = platform.system()
     base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -20,7 +22,8 @@ def play_sound(sound_file):
             pygame.mixer.music.load("sound/sound.mp3")
             pygame.mixer.music.play()
         except ImportError:
-            print("pygame library is not installed. Please install it using 'pip install pygame'.")
+            print(
+                "pygame library is not installed. Please install it using 'pip install pygame'.")
     elif system == "Windows":
         try:
             import winsound
@@ -29,6 +32,7 @@ def play_sound(sound_file):
             print("winsound module is not available on this system.")
     else:
         print("Unsupported operating system:", system)
+
 
 # For colored strings
 init(autoreset=True)
@@ -46,10 +50,10 @@ while status == True:
         status = True
     # Exit script if response code==404
     elif (blocks.status_code == 404):
-        #status = False
+        # status = False
         print("Lost connection! Exit script")
         os.system('ctrl+c')
-    
+
     # Print logo
     print(Style.NORMAL + Fore.YELLOW + '''\
         
@@ -59,9 +63,10 @@ while status == True:
 ██╔══██╗██║   ██║   ██║     ██║   ██║██║██║╚██╗██║
 ██████╔╝██║   ██║   ╚██████╗╚██████╔╝██║██║ ╚████║
 ╚═════╝ ╚═╝   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝''')
-    print(Style.DIM + Fore.LIGHTBLACK_EX + "₿itcoin ticker by https://github.com/haui-btc")
+    print(Style.DIM + Fore.LIGHTCYAN_EX +
+          "₿itcoin ticker by https://github.com/haui-btc")
     print()
-    
+
     # API Endpoints
     # Mining
     mining = requests.get("https://mempool.space/api/v1/difficulty-adjustment")
@@ -72,7 +77,7 @@ while status == True:
     cap = requests.get(
         "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true")
     blocks = requests.get("https://mempool.space/api/blocks")
-    
+
     # Create lists to store values from 'blocks' api
     height_list = []
     id_list = []
@@ -81,7 +86,7 @@ while status == True:
     readable_time = []
     tx_count_list = []
     size_list = []
-    
+
     # Write blockchain API (blocks) values to list
     # blocks api provides info of the last 10 blocks
     # write values to a list to print only the latest values
@@ -92,21 +97,22 @@ while status == True:
         timestamp_list.append(data['timestamp'])
         tx_count_list.append(data['tx_count'])
         size_list.append(data['size'])
-    
+
     # Convert timestamp to human-readable time
     for times in timestamp_list:
         a = time.ctime(times)
         readable_time.append(a)
-    
+
     # Screen Output
     # Price/Marketcap
     print(
         Style.NORMAL + Fore.YELLOW + "==|Price / Marketcap|================================================================")
     print("Price:", cap.json()['bitcoin']['usd'], "USD")
     print("Moscow Time:", round(100000000/(cap.json()['bitcoin']['usd'])))
-    print("Marketcap:", round(cap.json()['bitcoin']['usd_market_cap'], 2), "USD")
+    print("Marketcap:", round(
+        cap.json()['bitcoin']['usd_market_cap'], 2), "USD")
     print("24h volume:", round(cap.json()['bitcoin']['usd_24h_vol'], 2), "USD")
-    #print("24h price change:", round(cap.json()['bitcoin']['usd_24h_change'], 2), "USD")
+    # print("24h price change:", round(cap.json()['bitcoin']['usd_24h_change'], 2), "USD")
     print()
 
     # Blockchain Info (blocks api)
@@ -141,10 +147,12 @@ while status == True:
         Style.NORMAL + Fore.YELLOW + "==|Mempool-Info|=====================================================================")
     print("Unconfirmed TX:", mempool.json()['count'])
     if second_last < mempool_tx:
-        print("New TX since last reload:", Style.NORMAL + Fore.YELLOW + "+" + str(diff))
+        print("New TX since last reload:", Style.NORMAL +
+              Fore.YELLOW + "+" + str(diff))
     else:
         play_sound("sound.mp3")
-        print("New TX since last reload:", Style.NORMAL + Fore.YELLOW + "New Block!")
+        print("New TX since last reload:",
+              Style.NORMAL + Fore.YELLOW + "New Block!")
     print("Minimum fee:", fees.json()['minimumFee'], "sat")
     print()
 
@@ -159,21 +167,24 @@ while status == True:
     # Mining info
     print(
         Style.NORMAL + Fore.YELLOW + "==|Mining-Info|======================================================================")
-    print("Difficulty progress:", round(mining.json()['progressPercent'], 2), "%")
+    print("Difficulty progress:", round(
+        mining.json()['progressPercent'], 2), "%")
     print("Remaining blocks:", mining.json()['remainingBlocks'])
-    print("Estimated difficulty change:", round(mining.json()['difficultyChange'], 2), "%")
-    print("Previous difficulty change:", round(mining.json()['previousRetarget'], 2), "%")
+    print("Estimated difficulty change:", round(
+        mining.json()['difficultyChange'], 2), "%")
+    print("Previous difficulty change:", round(
+        mining.json()['previousRetarget'], 2), "%")
     print()
-    
+
     # Refresh countdown
     print(Style.DIM + Fore.LIGHTBLACK_EX + "Reloading data...")
     # Progress bar
-    pbar = tqdm(total=100)  #PARAMS: , colour="white"
+    pbar = tqdm(total=100)  # PARAMS: , colour="white"
     for i in range(15):
         sleep(1)
         pbar.update(7)
     pbar.close()
-    
+
     # Clear screen - check OS to decide if clear or cls is needed
     if (os.name == 'posix'):
         os.system('clear')
