@@ -4,7 +4,32 @@ import os
 from colorama import init, Fore, Back, Style
 from tqdm import tqdm
 from time import sleep
-from playsound import playsound
+import platform
+import sys
+
+# function to play a sound if a new block is mined (check if os is linux or windows)
+def play_sound(sound_file):
+    system = platform.system()
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    sound_path = os.path.join(base_dir, "sound", sound_file)
+
+    if system == "Linux":
+        try:
+            import pygame
+            pygame.mixer.init()
+            pygame.mixer.music.load("sound/sound.mp3")
+            pygame.mixer.music.play()
+        except ImportError:
+            print("pygame library is not installed. Please install it using 'pip install pygame'.")
+    elif system == "Windows":
+        try:
+            import winsound
+            winsound.PlaySound(sound_path, winsound.SND_FILENAME)
+        except ImportError:
+            print("winsound module is not available on this system.")
+    else:
+        print("Unsupported operating system:", system)
+
 # For colored strings
 init(autoreset=True)
 
@@ -118,7 +143,7 @@ while status == True:
     if second_last < mempool_tx:
         print("New TX since last reload:", Style.NORMAL + Fore.YELLOW + "+" + str(diff))
     else:
-        playsound('/home/haui/git/Bitcoin_ticker/sound/sound.mp3')
+        play_sound("sound.mp3")
         print("New TX since last reload:", Style.NORMAL + Fore.YELLOW + "New Block!")
     print("Minimum fee:", fees.json()['minimumFee'], "sat")
     print()
