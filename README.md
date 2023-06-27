@@ -1,6 +1,6 @@
 # Bitcoin ticker
 
-This Python script retrieves real-time Bitcoin blockchain information from the mempool.space API. It provides details such as Bitcoin price, market cap, transaction fees, mempool information, and mining details.
+This Python script retrieves real-time Bitcoin blockchain information. It provides details such as Bitcoin price, market cap, transaction fees, mempool information, and mining details.
 
 ## Features
 
