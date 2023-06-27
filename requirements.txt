@@ -1,2 +1,4 @@
-pip install colorama
-pin install pygame
+requests
+colorama
+tqdm
+pygame
