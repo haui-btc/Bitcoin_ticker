@@ -65,10 +65,6 @@ The script provides real-time information about:
 - For playing a sound when a new block is mined, it requires Pygame on Linux and Winsound on Windows.
 - The sound file to be played should be placed in the 'sound' directory with the name 'sound.mp3'.
 
-## Contribution
-
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
 ## Screenshots
 
 ![App Screenshot](https://github.com/haui-btc/bitcoin_ticker/blob/main/screenshots/main.png?raw=true)
