@@ -51,6 +51,7 @@ python bitcoin_ticker.py
 The script provides real-time information about:
 
 - Bitcoin Price
+- Moscow Time (number of satoshis you can buy at the moment for 1 US Dollar)
 - Marketcap
 - 24 Hour Volume
 - Latest block details (height, timestamp, hash, transaction count, size)
