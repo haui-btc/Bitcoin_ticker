@@ -79,6 +79,7 @@ bitcoin
 The script provides real-time information about:
 
 - Bitcoin Price
+- Moscow Time (number of satoshis you can buy at the moment for 1 US Dollar)
 - Marketcap
 - 24 Hour Volume
 - Latest block details (height, timestamp, hash, transaction count, size)
@@ -91,10 +92,6 @@ The script provides real-time information about:
 - This script uses the APIs from mempool.space and coingecko.com.
 - For playing a sound when a new block is mined, it requires Pygame on Linux and Winsound on Windows.
 - The sound file to be played should be placed in the 'sound' directory with the name 'sound.mp3'.
-
-## Contribution
-
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## Screenshots
 

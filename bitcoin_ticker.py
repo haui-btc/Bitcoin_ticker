@@ -1,15 +1,13 @@
-import requests
-import time
 import os
-from colorama import init, Fore, Back, Style
-from tqdm import tqdm
-from time import sleep
 import platform
+import requests
 import sys
+import time
+from colorama import init, Fore, Back, Style
+from time import sleep
+from tqdm import tqdm
 
-# function to play a sound if a new block is mined (check if os is linux or windows)
-
-
+# check if os is linux or windows (for the sound when a new block was mined)
 def play_sound(sound_file):
     system = platform.system()
     base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -33,8 +31,6 @@ def play_sound(sound_file):
     else:
         print("Unsupported operating system:", system)
 
-
-# For colored strings
 init(autoreset=True)
 
 # Used to calculate mempool tx difference since last reload
@@ -44,17 +40,13 @@ mempool_history = []
 # Define API Endpoint for connection check
 blocks = requests.get("https://mempool.space/api/blocks")
 status = True
-while status == True:
-    # Repeats following code if response code==200 (from blocks-api)
-    if (blocks.status_code == 200):
+while status:
+    if blocks.status_code == 200:
         status = True
-    # Exit script if response code==404
-    elif (blocks.status_code == 404):
-        # status = False
+    elif blocks.status_code == 404:
         print("Lost connection! Exit script")
         os.system('ctrl+c')
 
-    # Print logo
     print(Style.NORMAL + Fore.YELLOW + '''\
         
 ██████╗ ██╗████████╗ ██████╗ ██████╗ ██╗███╗   ██╗
@@ -135,7 +127,6 @@ while status == True:
     diff = 0
 
     # Calculate new TX since last update
-    # diff = 0 if
     for i, tx in enumerate(mempool_history[:-1]):
         second_last = tx
         if second_last < mempool_tx:
@@ -186,7 +177,7 @@ while status == True:
     pbar.close()
 
     # Clear screen - check OS to decide if clear or cls is needed
-    if (os.name == 'posix'):
+    if os.name == 'posix':
         os.system('clear')
     else:
         os.system('cls')
