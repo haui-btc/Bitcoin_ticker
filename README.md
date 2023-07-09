@@ -68,7 +68,7 @@ In order for your current terminal to recognize the new alias, you need to sourc
 source ~/.bashrc
 ```
 
-Now you can start your backup by simply typing
+Now you can start the bitcoin ticker by simply typing
 
 ```bash
 bitcoin
