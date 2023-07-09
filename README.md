@@ -46,6 +46,34 @@ Run the script:
 python bitcoin_ticker.py
 ```
 
+### Create an alias to run the script
+
+Open your .bashrc file in a text editor.
+
+```bash
+vim ~/.bashrc
+```
+
+Go to the end of the file and add the following line:
+
+```bash
+alias bitcoin='python /PATH/TO/YOUR/bitcoin_ticker.py'
+```
+
+Save the file and exit the editor.
+
+In order for your current terminal to recognize the new alias, you need to source your .bashrc file with the following command:
+
+```bash
+source ~/.bashrc
+```
+
+Now you can start your backup by simply typing
+
+```bash
+bitcoin
+```
+
 ## Information Provided
 
 The script provides real-time information about:
