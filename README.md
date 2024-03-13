@@ -37,6 +37,11 @@ cd bitcoin_ticker
 ```bash
 pip install -r requirements.txt
 ```
+OR
+
+```bash
+sudo apt install python3-requests python3-pygame python3-colorama python3-tqdm
+```
 
 ## Usage
 
