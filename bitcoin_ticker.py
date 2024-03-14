@@ -168,7 +168,7 @@ while status:
     print()
 
     # Refresh countdown
-    print(Style.DIM  + "Reloading data...")
+    print(Style.DIM  + " Reloading data...")
     # Progress bar
     pbar = tqdm(total=100)  # PARAMS: , colour="white"
     for i in range(15):
