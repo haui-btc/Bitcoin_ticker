@@ -1,6 +1,5 @@
 import os
 import platform
-import subprocess
 import requests
 import sys
 import time
@@ -8,17 +7,7 @@ from colorama import init, Fore, Back, Style
 from time import sleep
 from tqdm import tqdm
 
-def set_terminal_size(columns, rows):
-    system = platform.system()
-    if system == "Windows":
-        subprocess.run(f"mode con: cols={columns} lines={rows}", shell=True)
-    elif system in ["Linux", "Darwin"]:
-        sys.stdout.write(f"\x1b[8;{rows};{columns}t")
-
-# Adjust the terminal size
-set_terminal_size(85, 43)  # Adjust the columns and rows as needed
-
-# The rest of your code
+# check if os is linux or windows (for the sound when a new block was mined)
 def play_sound(sound_file):
     system = platform.system()
     base_dir = os.path.dirname(os.path.abspath(__file__))
