@@ -18,7 +18,6 @@ def set_terminal_size(columns, rows):
 # Adjust the terminal size
 set_terminal_size(85, 43)  # Adjust the columns and rows as needed
 
-# The rest of your code
 def play_sound(sound_file):
     system = platform.system()
     base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -28,11 +27,16 @@ def play_sound(sound_file):
         try:
             import pygame
             pygame.mixer.init()
-            pygame.mixer.music.load("sound/sound.mp3")
-            pygame.mixer.music.play()
+
+            if not os.path.isfile(sound_path):
+                print(f"Error: Sound file '{sound_path}' not found.")
+            else:
+                pygame.mixer.music.load(sound_path)
+                pygame.mixer.music.play()
+
         except ImportError:
-            print(
-                "pygame library is not installed. Please install it using 'pip install pygame'.")
+            print("pygame library is not installed. Please install it using 'pip install pygame'.")
+
     elif system == "Windows":
         try:
             import winsound
